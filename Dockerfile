@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM debian:buster
 
 # Add debian backports repo for wireguard packages
 RUN echo "deb http://deb.debian.org/debian/ buster-backports main" > /etc/apt/sources.list.d/buster-backports.list
