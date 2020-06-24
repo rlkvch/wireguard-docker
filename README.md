@@ -4,21 +4,21 @@
 ### First Run
 If the wireguard kernel module is not already installed on the __host__ system, use this first run command to install it:
 ```
-docker run -it --rm --cap-add sys_module -v /lib/modules:/lib/modules rlkvch/docker-wireguard:latest install-module
+docker run -it --rm --cap-add sys_module -v /lib/modules:/lib/modules rlkvch/wireguard:latest install-module
 ```
 
 ### Normal Run
 ```
-docker run --cap-add net_admin --cap-add sys_module -v <config volume or host dir>:/etc/wireguard -p <externalport>:<dockerport>/udp rlkvch/docker-wireguard:latest
+docker run --cap-add net_admin --cap-add sys_module -v <config volume or host dir>:/etc/wireguard -p <externalport>:<dockerport>/udp rlkvch/wireguard:latest
 ```
 Example:
 ```
-docker run --cap-add net_admin --cap-add sys_module -v wireguard_conf:/etc/wireguard -p 5555:5555/udp rlkvch/docker-wireguard:latest
+docker run --cap-add net_admin --cap-add sys_module -v wireguard_conf:/etc/wireguard -p 5555:5555/udp rlkvch/wireguard:latest
 ```
 ### Generate Keys
 This shortcut can be used to generate and display public/private key pairs to use for the server or clients
 ```
-docker run -it --rm rlkvch/docker-wireguard:latest genkeys
+docker run -it --rm rlkvch/wireguard:latest genkeys
 ```
 
 ## Configuration
@@ -57,7 +57,7 @@ Sample docker-compose.yml
 version: "2"
 services:
  vpn:
-  image: rlkvch/docker-wireguard:latest
+  image: rlkvch/wireguard:latest
   volumes:
    - data:/etc/wireguard
   networks:
