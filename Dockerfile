@@ -2,7 +2,7 @@ FROM ubuntu:focal
 
 # Install wireguard packges
 RUN apt-get update && \
- apt-get install -y wireguard-tools iptables nano net-tools procps openresolv && \
+    apt-get install -y --no-install-recommends wireguard-tools iptables nano net-tools procps openresolv && \
  apt-get clean
 
 # Add main work dir to PATH
