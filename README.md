@@ -1,4 +1,4 @@
-![Build and publish Docker Image ](https://github.com/rlkvch/docker-wireguard/workflows/Build%20and%20publish%20Docker%20Image/badge.svg)
+![Build and publish Docker Image_](https://github.com/rlkvch/docker-wireguard/workflows/Build%20and%20publish%20Docker%20Image/badge.svg)
 
 ## Run
 ### First Run
@@ -54,25 +54,30 @@ PersistentKeepalive = 25
 ## docker-compose
 Sample docker-compose.yml
 ```
-version: "2"
+version: "2.2"
 services:
- vpn:
-  image: rlkvch/wireguard:latest
-  volumes:
-   - data:/etc/wireguard
-  networks:
-   - net
-  ports:
-   - 5555:5555/udp
-  restart: unless-stopped
-  cap_add:
-   - NET_ADMIN
-   - SYS_MODULE
+  wireguard:
+    image: rlkvch/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Minsk
+    volumes:
+      - /home/rlkvch/hnetwork/wireguard/data:/etc/wireguard
+    networks:
+      - mynetwork
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
 
 networks:
-  net:
-
-volumes:
- data:
-  driver: local
+    mynetwork:
+       external:
+          name: mynetwork
 ```
