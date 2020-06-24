@@ -1,31 +1,24 @@
-# wireguard-docker
-Wireguard setup in Docker on Debian kernel meant for a simple personal VPN.
-There are currently 2 branches, stretch and buster. Use the branch that corresponds to your host machine if the kernel module install feature is going to be used.
-
-## Overview
-This docker image and configuration is my simple version of a wireguard personal VPN, used for the goal of security over insecure (public) networks, not necessarily for Internet anonymity. The docker images use debian, and the host OS must also use the same version of debian, since the image will build the wireguard kernel modules on first run. As such, the host's /lib/modules directory also needs to be mounted to the container on the first run to install the module (see the Running section below). Thanks to [activeeos/wireguard-docker](https://github.com/activeeos/wireguard-docker) for the general structure of the docker image. It is the same concept just built on Ubuntu 16.04.
-
-In my use case, I'm running the wireguard docker image on a free-tier Google Cloud Platform debian virtual machine and connect to it with Android, Linux, and a GL-Inet router as clients.
+![Build and publish Docker Image ](https://github.com/rlkvch/docker-wireguard/workflows/Build%20and%20publish%20Docker%20Image/badge.svg)
 
 ## Run
 ### First Run
 If the wireguard kernel module is not already installed on the __host__ system, use this first run command to install it:
 ```
-docker run -it --rm --cap-add sys_module -v /lib/modules:/lib/modules cmulk/wireguard-docker:buster install-module
+docker run -it --rm --cap-add sys_module -v /lib/modules:/lib/modules rlkvch/docker-wireguard:latest install-module
 ```
 
 ### Normal Run
 ```
-docker run --cap-add net_admin --cap-add sys_module -v <config volume or host dir>:/etc/wireguard -p <externalport>:<dockerport>/udp cmulk/wireguard-docker:buster
+docker run --cap-add net_admin --cap-add sys_module -v <config volume or host dir>:/etc/wireguard -p <externalport>:<dockerport>/udp rlkvch/docker-wireguard:latest
 ```
 Example:
 ```
-docker run --cap-add net_admin --cap-add sys_module -v wireguard_conf:/etc/wireguard -p 5555:5555/udp cmulk/wireguard-docker:buster
+docker run --cap-add net_admin --cap-add sys_module -v wireguard_conf:/etc/wireguard -p 5555:5555/udp rlkvch/docker-wireguard:latest
 ```
 ### Generate Keys
 This shortcut can be used to generate and display public/private key pairs to use for the server or clients
 ```
-docker run -it --rm cmulk/wireguard-docker:buster genkeys
+docker run -it --rm rlkvch/docker-wireguard:latest genkeys
 ```
 
 ## Configuration
@@ -64,7 +57,7 @@ Sample docker-compose.yml
 version: "2"
 services:
  vpn:
-  image: cmulk/wireguard-docker:buster
+  image: rlkvch/docker-wireguard:latest
   volumes:
    - data:/etc/wireguard
   networks:
@@ -82,15 +75,4 @@ networks:
 volumes:
  data:
   driver: local
-```
-## Build
-Since the images are already on Docker Hub, you only need to do this if you want to change something
-```
-git clone https://github.com/cmulk/wireguard-docker.git
-cd wireguard-docker
-git checkout stretch 
-##OR##
-git checkout buster
-
-docker build -t wireguard:local .
 ```
