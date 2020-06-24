@@ -1,11 +1,8 @@
-FROM debian:buster
-
-# Add debian backports repo for wireguard packages
-RUN echo "deb http://deb.debian.org/debian/ buster-backports main" > /etc/apt/sources.list.d/buster-backports.list
+FROM ubuntu:focal
 
 # Install wireguard packges
 RUN apt-get update && \
- apt-get install -y --no-install-recommends wireguard-tools iptables nano net-tools procps openresolv && \
+ apt-get install -y wireguard-tools iptables nano net-tools procps openresolv && \
  apt-get clean
 
 # Add main work dir to PATH
@@ -16,7 +13,6 @@ ENV PATH="/scripts:${PATH}"
 ENV IPTABLES_MASQ=1
 
 # Copy scripts to containers
-COPY install-module /scripts
 COPY run /scripts
 COPY genkeys /scripts
 RUN chmod 755 /scripts/*
