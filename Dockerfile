@@ -2,7 +2,7 @@ FROM ubuntu:focal
 
 # Install wireguard packges
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends wireguard-tools iptables iproute2 nano net-tools procps openresolv && \
+    apt-get install -y --no-install-recommends wireguard-tools mawk grep qrencode iptables iproute2 nano net-tools procps openresolv && \
  apt-get clean
 
 # Add main work dir to PATH
@@ -15,6 +15,7 @@ ENV IPTABLES_MASQ=1
 # Copy scripts to containers
 COPY run /scripts
 COPY genkeys /scripts
+COPY easy-wg-quick /scripts
 RUN chmod 755 /scripts/*
 
 # Wirguard interface configs go in /etc/wireguard
