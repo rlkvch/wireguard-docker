@@ -15,7 +15,7 @@ ENV IPTABLES_MASQ=1
 # Copy scripts to containers
 COPY run /scripts
 COPY genkeys /scripts
-COPY easy-wg-quick /scripts
+# COPY easy-wg-quick /scripts
 RUN chmod 755 /scripts/*
 
 # Wirguard interface configs go in /etc/wireguard

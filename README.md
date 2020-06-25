@@ -20,7 +20,7 @@ This shortcut can be used to generate and display public/private key pairs to us
 ```
 docker run -it --rm rlkvch/wireguard:latest genkeys
 ```
-### Create Wireguard configuration
+### Create Wireguard configuration (not working yet)
 This shortcut can be used to generate configuration and display qr code
 ```
 docker run -it --rm rlkvch/wireguard:latest easy-wg-quick
